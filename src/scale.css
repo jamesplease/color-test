@@ -6,6 +6,11 @@
   margin-bottom: 50px;
 }
 
+.generator {
+  display: flex;
+  padding: 20px;
+}
+
 .colorScale_header {
   display: flex;
   align-items: center;
@@ -61,4 +66,8 @@
 }
 .contrast-good {
   color: green;
+}
+
+.contrastMargin {
+  margin-left: 10px;
 }

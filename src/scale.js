@@ -1,7 +1,9 @@
 import React from "react";
+import classnames from "classnames";
 import chroma from "chroma-js";
 import "./scale.css";
 import ScaleRow from "./scale-row";
+import meetRatio from "./utils/meet-ratio";
 
 export default function Scale({ hex }) {
   const color = chroma(hex);
@@ -27,6 +29,13 @@ export default function Scale({ hex }) {
     hslVals.push(chroma.hsl(hsl[0], hsl[1], brightness));
   }
 
+  const contrasted = meetRatio({
+    rgb: color.rgb()
+  });
+
+  const contrast = chroma.contrast(contrasted.hex(), "white");
+  const good = contrast > 4.5;
+
   return (
     <div className="colorScale">
       <div className="colorScale_header">
@@ -40,6 +49,21 @@ export default function Scale({ hex }) {
       </div>
       <ScaleRow label="Lab" vals={labVals} />
       <ScaleRow label="HSL" vals={hslVals} />
+      <div className="generator">
+        <div
+          style={{
+            "--bg": contrasted.hex()
+          }}
+          className="colorSquare"
+        />
+        <div
+          className={classnames("contrast contrastMargin", {
+            "contrast-good": good
+          })}
+        >
+          {contrast.toFixed(2)}
+        </div>
+      </div>
     </div>
   );
 }
