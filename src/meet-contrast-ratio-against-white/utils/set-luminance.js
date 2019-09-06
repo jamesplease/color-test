@@ -27,12 +27,12 @@ export default function setLuminance(rgb, lum) {
 
   const test = (low, high) => {
     const mid = interpolateRgb(low, high, 0.5);
-    const lm = rgb2luminance(mid);
+    const lm = rgb2luminance(mid[0], mid[1], mid[2]);
 
     // We use an iterative approach that will either get us to the target luminance
     // or get us pretty close.
     if (Math.abs(lum - lm) < EPS || !max_iter--) {
-      return mid;
+      return mid.map(Math.round);
     }
     return lm > lum ? test(low, mid) : test(mid, high);
   };
