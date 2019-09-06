@@ -3,7 +3,16 @@ import classnames from "classnames";
 import chroma from "chroma-js";
 import "./scale.css";
 import ScaleRow from "./scale-row";
-import meetRatio from "./utils/meet-ratio";
+import meetRatio from "./meet-contrast-ratio-against-white";
+
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length === 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
 
 export default function Scale({ hex }) {
   const color = chroma(hex);
@@ -33,8 +42,10 @@ export default function Scale({ hex }) {
     rgb: color.rgb()
   });
 
-  const contrast = chroma.contrast(contrasted.hex(), "white");
-  const good = contrast > 4.5;
+  const hexContrasted = rgbToHex(contrasted[0], contrasted[1], contrasted[2]);
+
+  // const contrast = chroma.contrast(contrasted.hex(), "white");
+  // const good = contrast > 4.5;
 
   return (
     <div className="colorScale">
@@ -52,16 +63,17 @@ export default function Scale({ hex }) {
       <div className="generator">
         <div
           style={{
-            "--bg": contrasted.hex()
+            "--bg": hexContrasted
           }}
           className="colorSquare"
         />
         <div
           className={classnames("contrast contrastMargin", {
-            "contrast-good": good
+            "contrast-good": true
           })}
         >
-          {contrast.toFixed(2)}
+          hello
+          {/* {contrast.toFixed(2)} */}
         </div>
       </div>
     </div>
