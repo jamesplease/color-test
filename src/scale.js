@@ -42,7 +42,11 @@ export default function Scale({ hex }) {
     rgb: color.rgb()
   });
 
-  const hexContrasted = rgbToHex(contrasted[0], contrasted[1], contrasted[2]);
+  const hexContrasted = rgbToHex(
+    Math.round(contrasted[0]),
+    Math.round(contrasted[1]),
+    Math.round(contrasted[2])
+  );
 
   // const contrast = chroma.contrast(contrasted.hex(), "white");
   // const good = contrast > 4.5;
